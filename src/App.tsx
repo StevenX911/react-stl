@@ -5,7 +5,10 @@ import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom'
 import { privateRoutes } from './routers'
 import MyLayout from './components/MyLayout'
 
-function App() {
+export interface IAppProps {
+}
+
+const App: React.FC<IAppProps> = (props: IAppProps) => {
   return (
     <MyLayout>
       <Switch>
