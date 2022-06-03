@@ -8,7 +8,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 
 // 2. 路由处理
 import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
-import { commonRoutes, privateRoutes } from './routers';
+import { commonRoutes } from './routers';
 
 // 3. 布局及样式处理
 import './css/index.less'

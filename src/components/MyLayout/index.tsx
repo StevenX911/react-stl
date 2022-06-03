@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { NavLink, withRouter } from 'react-router-dom'
+import { Layout, Menu } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
@@ -8,23 +8,25 @@ import { privateRoutes } from '../../routers';
 
 const { Header, Content, Sider } = Layout;
 
-const mapIcon = new Map;
+const mapIcon = new Map();
 mapIcon.set('edit', UserOutlined);
 mapIcon.set('home', LaptopOutlined);
 mapIcon.set('setting', NotificationOutlined);
 
-const topItems: MenuProps['items'] = privateRoutes.filter(item => item.isTop == true).map(
+const topItems: MenuProps['items'] = privateRoutes.filter(item => item.isTop === true).map(
   (item, index) => {
-    const key = String(index + 1);
+    // const key = String(index + 1);
     return {
-      key: `menu${key}`,
+      key: item.pathname,
       icon: React.createElement(mapIcon.get(item.icon)),
       label: (<NavLink to={item.pathname}>{item.title}</NavLink>)
     };
   },
 );
 
-const MyLayout: React.FC = (props) => (
+const MyLayout: React.FC = (props:any) => {
+  // console.log(props)
+  return (
   <Layout style={{ minHeight: '100%' }}>
     <Header className="header">
       <div className="logo" />
@@ -34,7 +36,7 @@ const MyLayout: React.FC = (props) => (
       <Sider width={200} className="site-layout-background">
         <Menu
           mode="inline"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={[props.location.pathname]}
           defaultOpenKeys={['sub1']}
           style={{ height: '100%', borderRight: 0 }}
           items={topItems}
@@ -60,6 +62,7 @@ const MyLayout: React.FC = (props) => (
       </Layout>
     </Layout>
   </Layout>
-);
+)};
 
-export default MyLayout;
+// 将路由信息挂载到props, 处理菜单项高亮
+export default withRouter(MyLayout);

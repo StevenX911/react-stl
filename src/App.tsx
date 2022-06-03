@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Pagination } from 'antd';
-
-import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import React from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { privateRoutes } from './routers'
 import MyLayout from './components/MyLayout'
 
