@@ -17,9 +17,19 @@
 - 状态`react-redux`
 - 异步`axios`
 
+## 项目开发步骤
+1. 规划路由
+2. 整体布局
+3. 模块开发
+4. 数据联调
+5. 提交测试
+6. 发布上线
+
 ## TODO
 - 服务端返回数据类型定义(TS)
-- 构造mock-api-server，为组件提供渲染数据（可以作为一个单独开源项目）
+- 构造mock-api-server，为组件提供渲染数据
+- 业务模块：登录/注册
+- 业务模块：通知中心
 
 ## 备注
 - `ant.design`国服：https://ant-design.antgroup.com/index-cn

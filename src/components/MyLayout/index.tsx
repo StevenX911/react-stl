@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Row, Col, Dropdown, Space, Avatar, Badge } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import {
     UserOutlined,
     LaptopOutlined,
@@ -30,11 +31,66 @@ const topItems: MenuProps['items'] = privateRoutes
 
 const MyLayout: React.FC = (props: any) => {
     // console.log(props)
+    const [visible, setVisible] = useState(false);
+
+    const handleMenuClick: MenuProps['onClick'] = e => {
+        if (e.key === '3') {
+            setVisible(false);
+        }
+    };
+
+    const handleVisibleChange = (flag: boolean) => {
+        setVisible(flag);
+    };
+
+    const menu = (
+        <Menu
+            onClick={handleMenuClick}
+            items={[
+                {
+                    label: '通知中心',
+                    key: '1',
+                },
+                {
+                    label: '个人设置',
+                    key: '2',
+                },
+                {
+                    label: '退出',
+                    key: '3',
+                },
+            ]}
+        />
+    );
+
     return (
         <Layout style={{ minHeight: '100%' }}>
             <Header className="header">
-                <div className="logo" />
-                <h2 style={{ color: '#fff' }}>REACT后台应用模板</h2>
+                <Row>
+                    <Col span={8}>
+                        <div className="logo" />
+                        <h2 style={{ color: '#fff' }}>REACT后台应用模板</h2>
+                    </Col>
+                    <Col span={3} offset={13}>
+                        <Dropdown
+                            overlay={menu}
+                            onVisibleChange={handleVisibleChange}
+                            visible={visible}
+                        >
+                            <a onClick={e => e.preventDefault()}>
+                                <Space>
+                                    <Badge count={1}>
+                                        <Avatar
+                                            shape="square"
+                                            icon={<UserOutlined />}
+                                        />
+                                    </Badge>
+                                    <DownOutlined />
+                                </Space>
+                            </a>
+                        </Dropdown>
+                    </Col>
+                </Row>
             </Header>
             <Layout>
                 <Sider width={200} className="site-layout-background">

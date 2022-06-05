@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Table, Space, Tag, Tooltip, Modal } from 'antd';
+import { Card, Button, Table, Tag, Tooltip, Modal } from 'antd';
 
 import { getTopics } from '../../api';
 import ButtonGroup from 'antd/lib/button/button-group';
@@ -19,6 +19,7 @@ const Article: React.FC = (props: any) => {
     const [DataSource, setDataSource] = useState([]);
     const [Columns, setColumns] = useState([]);
     const [Total, setTotal] = useState(0);
+    const [IsLoading, setIsLoading] = useState(true);
 
     const editHandler = (text: any, record: any, index: any) => {
         console.log(text, record, index);
@@ -31,6 +32,7 @@ const Article: React.FC = (props: any) => {
         console.log(text, record, index);
     };
 
+    // TODO: effect瘦身
     useEffect(() => {
         getTopics()
             .then(response => {
@@ -56,7 +58,7 @@ const Article: React.FC = (props: any) => {
                     }
                 );
                 const columns: any = Object.keys(data[0]).map(item => {
-                    if (item == 'visit_count') {
+                    if (item === 'visit_count') {
                         return {
                             title: mapFildToCN[item],
                             dataIndex: item,
@@ -76,7 +78,7 @@ const Article: React.FC = (props: any) => {
                             },
                         };
                     }
-                    if (item == 'reply_count') {
+                    if (item === 'reply_count') {
                         return {
                             title: mapFildToCN[item],
                             dataIndex: item,
@@ -137,6 +139,9 @@ const Article: React.FC = (props: any) => {
             })
             .catch(reason => {
                 console.warn(reason);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, []);
 
@@ -149,6 +154,7 @@ const Article: React.FC = (props: any) => {
                 <Table
                     dataSource={DataSource}
                     columns={Columns}
+                    loading={IsLoading}
                     pagination={{ total: Total, pageSize: 8 }}
                 />
             </Card>

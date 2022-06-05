@@ -3,9 +3,21 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { privateRoutes } from './routers';
 import MyLayout from './components/MyLayout';
 
-export interface IAppProps {}
+export interface IAppProps {
+    history: any;
+}
 
 const App: React.FC<IAppProps> = (props: IAppProps) => {
+    // console.log(props);
+
+    props?.history?.listen((location: any) => {
+        const findOne = privateRoutes.find(item => {
+            return location.pathname === item.pathname;
+        });
+        // 设置浏览器tab标题
+        document.title = findOne ? findOne.title : document.title;
+    });
+
     return (
         <MyLayout>
             <Switch>
